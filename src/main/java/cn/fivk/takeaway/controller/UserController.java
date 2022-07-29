@@ -42,7 +42,7 @@ public class UserController {
             log.info("code = {}", code);
 
             // 3. 调用阿里云短信API服务
-            SMSUtils.sendMessage("Fivk博客", "SMS_246680482", phone, code);
+            SMSUtils.sendMessage("Fivk博客", "", phone, code);
 
             // 4. 将生成的验证码保存到Session
             session.setAttribute(phone, code);
