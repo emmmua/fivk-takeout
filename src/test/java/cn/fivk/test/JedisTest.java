@@ -10,7 +10,7 @@ import java.util.Set;
 public class JedisTest {
 
     @Test
-    public void testRedis(){
+    public void testRedis() {
         //1 获取连接
         Jedis jedis = new Jedis("localhost",6379);
 
