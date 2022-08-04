@@ -17,19 +17,8 @@ public class JedisTest {
         //2 执行具体的操作
         jedis.set("username","xiaoming");
 
-        String value = jedis.get("username");
-        System.out.println(value);
-
-        //jedis.del("username");
-
-        jedis.hset("myhash","addr","bj");
-        String hValue = jedis.hget("myhash", "addr");
-        System.out.println(hValue);
-
-        Set<String> keys = jedis.keys("*");
-        for (String key : keys) {
-            System.out.println(key);
-        }
+        String username = jedis.get("username");
+        System.out.println(username);
 
         //3 关闭连接
         jedis.close();
