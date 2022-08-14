@@ -1,6 +1,7 @@
 package cn.fivk.takeaway.service;
 
 
+import cn.fivk.takeaway.dto.DishDto;
 import cn.fivk.takeaway.dto.SetmealDto;
 import cn.fivk.takeaway.entity.Setmeal;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -24,4 +25,11 @@ public interface SetmealServer extends IService<Setmeal> {
 
     // 查询套餐，根据id查询菜品信息以及对应的口味信息，需要操作两张表：setmeal, setmeal_dish
     public SetmealDto getByIdWithSetmealDishes(Long id);
+
+
+    /**
+     * 更新套餐，同时更新口味信息
+     * @param setmealDto
+     */
+    public void updateWithDish(SetmealDto setmealDto);
 }

@@ -3,6 +3,7 @@ package cn.fivk.takeaway.service.impl;
 import cn.fivk.takeaway.common.CustomException;
 import cn.fivk.takeaway.common.R;
 import cn.fivk.takeaway.dto.SetmealDto;
+import cn.fivk.takeaway.entity.DishFlavor;
 import cn.fivk.takeaway.entity.Setmeal;
 import cn.fivk.takeaway.entity.SetmealDish;
 import cn.fivk.takeaway.mapper.SetmealMapper;
@@ -94,5 +95,30 @@ public class SetmealServerImpl extends ServiceImpl<SetmealMapper, Setmeal> imple
         setmealDto.setSetmealDishes(setmealDishList);
 
         return setmealDto;
+    }
+
+
+    /**
+     * 更新套餐，同时更新口味信息
+     * @param setmealDto
+     */
+    public void updateWithDish(SetmealDto setmealDto) {
+        // 1. 更新基本信息
+        this.updateById(setmealDto);
+
+        // 2. 清理当前套餐对应套餐数据---setmeal_dish表的delete
+        LambdaQueryWrapper<SetmealDish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SetmealDish::getSetmealId, setmealDto.getId());
+        setmealDishService.remove(queryWrapper);
+
+
+        // 3. 添加当前提交过来的菜品信息---setmeal_dish表的insert操作
+        List<SetmealDish> flavors = setmealDto.getSetmealDishes();
+        Long setmealId = setmealDto.getId();
+        flavors = flavors.stream().map((item) -> {
+            item.setSetmealId(setmealId);
+            return item;
+        }).collect(Collectors.toList());
+        setmealDishService.saveBatch(flavors);
     }
 }

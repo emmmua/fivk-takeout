@@ -1,6 +1,7 @@
 package cn.fivk.takeaway.controller;
 
 import cn.fivk.takeaway.common.R;
+import cn.fivk.takeaway.dto.DishDto;
 import cn.fivk.takeaway.dto.SetmealDto;
 import cn.fivk.takeaway.entity.Category;
 import cn.fivk.takeaway.entity.Setmeal;
@@ -139,5 +140,30 @@ public class SetmealController {
     public R<SetmealDto> getById(@PathVariable Long id) {
         SetmealDto SetmealDto = setmealServer.getByIdWithSetmealDishes(id);
         return R.success(SetmealDto);
+    }
+
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public R<SetmealDto> get(@PathVariable Long id) {
+        SetmealDto setmealDto = setmealServer.getByIdWithSetmealDishes(id);
+        return R.success(setmealDto);
+    }
+
+
+    /**
+     * 修改套餐
+     * @param setmealDto
+     * @return
+     */
+    @PutMapping
+    public R<String> update(@RequestBody SetmealDto setmealDto) {
+        log.info(setmealDto.toString());
+        setmealServer.updateWithDish(setmealDto);
+        return R.success("修改套餐成功");
     }
 }

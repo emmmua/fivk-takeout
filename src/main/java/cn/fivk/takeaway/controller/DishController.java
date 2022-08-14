@@ -134,7 +134,7 @@ public class DishController {
         String key = "dish_" + dishDto.getCategoryId() + "_1";
         redisTemplate.delete(key);
 
-        return R.success("新增菜品成功");
+        return R.success("修改菜品成功");
     }
 
     /**
@@ -156,7 +156,6 @@ public class DishController {
         if (dishDtoList != null) {
             return R.success(dishDtoList);
         }
-
 
         // 如果不存在， 进行查询数据库
         // 1. 构造查询条件
